@@ -1,0 +1,72 @@
+    <!DOCTYPE html>
+    <html>
+    <head>
+    <meta charset="utf-8">
+    <title>Leaflet 0.7.7</title>
+    <link rel="stylesheet" type="text/css" href="//unpkg.com/leaflet@0.7.7/dist/leaflet.css">
+    <script type="text/javascript" src="//unpkg.com/leaflet@0.7.7/dist/leaflet.js"></script>
+    <!-- The defer is not necessary for autoloading, but is necessary for the script at the bottom to work as a Quine. -->
+    <script type="text/javascript" src="//cdn.rawgit.com/google/code-prettify/master/loader/run_prettify.js?autoload=true&amp;lang=css" defer="defer"></script>
+    <style type="text/css">
+    html,body,#map,#src{
+    	width:100%;height:100%;
+    	margin:0;padding:0;
+    }
+    #map,#src{
+    	width:50%;
+    	float:left;
+    }
+    #src{
+    	overflow:scroll;
+    }
+    #head{
+    	text-align:center;
+    }
+    li.L0,li.L1,li.L2,li.L3,li.L5, li.L6, li.L7, li.L8{
+    	list-style-type:decimal!important
+    }
+    </style>
+    <script type="text/javascript">
+    function init(){
+    	var url='http://india-wris.nrsc.gov.in'; /* replace url value with http://india-wris.nrsc.gov.in */
+    	var map=L.map('map',{
+    		crs:L.CRS.EPSG4326,//3857,900913,4326
+    		center:[21,78],
+    		zoom:5,
+    		//minZoom:5,
+    		//maxZoom:14,
+    		layers:[
+    			//WMS enabled ArcGIS REST based services through tileLayer/ wms
+    			L.tileLayer.wms(url+'/ArcGIS/services/Common/DEM/MapServer/WMSServer',{layers:'1,2,3',version:'1.3.0'}),
+    			L.tileLayer.wms(url+'/ArcGIS/services/Common/Outside_India/MapServer/WMSServer',{layers:1,version:'1.3.0',transparent:true,format:'image/png32'}),
+    			L.tileLayer.wms(url+'/ArcGIS/services/SubInfoSysLCC/Admin_subinfo_a/MapServer/WMSServer',{layers:'1,2,3,4,5,6,7,8',version:'1.3.0',transparent:true,format:'image/png'}),
+    			L.tileLayer.wms(url+'/ArcGIS/services/SubInfoSysLCC/Infra_InfoSystem/MapServer/WMSServer',{layers:'1,2,3,4,5,6',version:'1.3.0',transparent:true,format:'image/png'}),
+    		]		
+    	});
+    };
+    </script>
+    </head>
+    <body onload="init();">
+    <div id="head">
+    <h3>India-WRIS WMS enabled ArcGIS REST based Map Services using Leaflet 0.7.7</h3>
+    <a href="/" target="_self" title="Click to open India-WRIS WebGIS Portal">India-WRIS Home</a>
+    <a href="/WMSServicesApp.html" target="_self" title="Click to open India-WRIS Web Map Services Application">India-WRIS Web Map Services Application</a>
+    </div>
+    <div id="map"></div>
+    <div id="src">
+    <!-- Language hints can be put in XML application directive style comments. -->
+    <!--?prettify lang=html linenums=true?-->
+    <pre id="quine" class="prettyprint" style="border:0"></pre>
+    </div>
+    <script type="text/javascript">//<![CDATA[
+    (function(){
+    	function html(s){
+    		return s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+    	}
+    	var src='<!DOCTYPE html>\n<html>\n'+document.documentElement.innerHTML+'\n<\/html>\n';
+    	var quineHtml=html(src);
+    	document.getElementById('quine').innerHTML=quineHtml;
+    })();
+    //]]>
+    </script></body>
+    </html>
